@@ -1,0 +1,17 @@
+<div class=" my-2">
+  <div class="col-4">
+    <app-input-select [title]="'categories'" [data]="categories" (selectedValue)="productFilterByCategory($event)"></app-input-select>
+  </div>
+  <!-- <div class="col-4">
+    <label>Search:</label>
+    <input type="text" class="form-control" />
+  </div> -->
+</div>
+<div class="row mt-3" *ngIf="!loading">
+  <ng-container *ngFor="let product of products">
+    <app-product-card [product]="product" class="col-3"></app-product-card>
+  </ng-container>
+</div>
+<div class="d-flex justify-content-center mt-5" *ngIf="loading" >
+    <app-spinner></app-spinner>
+</div>

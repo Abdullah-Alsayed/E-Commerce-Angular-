@@ -1,0 +1,21 @@
+<div class="card" >
+  <img [src]="product?.image" class="card-img-top mt-2" [alt]="product?.image" />
+  <div class="card-body">
+    <h5 class="card-title">{{product?.title}}</h5>
+    <p class="card-text">
+    {{ product?.description?.substring(0,150)}} <span class="more">...more</span>
+    </p>
+    <div class="row justify-content-between">
+      <div class="col-8">
+        <button *ngIf="!toggleAddBtn" (click)="toggleAddBtn = true"  class="btn btn-primary">Add to Cart</button>
+        <div *ngIf="toggleAddBtn" class="d-flex">
+          <input [(ngModel)]="Quantity" type="number" min="1" value="1" class=" form-control mx-2">
+          <button (click)="addToCart()"  class="btn btn-success">Add</button>
+        </div>
+      </div>
+      <div class="col-4">
+        <p class="btn rounded-5 btn-outline-danger">${{product?.price}}</p>
+      </div>
+    </div>
+  </div>
+</div>
