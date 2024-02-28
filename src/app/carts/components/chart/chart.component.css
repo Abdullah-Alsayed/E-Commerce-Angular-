@@ -1,0 +1,22 @@
+.main{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Shopping-Cart{
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 55px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.table-end{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}

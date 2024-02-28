@@ -3,6 +3,7 @@
   align-items: center;
   margin-bottom: 20px;
   text-overflow: clip;
+  cursor: pointer;
   transition: all .2s ease-out;
 }
 .card:hover {
@@ -17,3 +18,10 @@ box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   cursor: pointer;
   color: #c1c1c1;
 }
+.card-flex{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10px;
+}
+

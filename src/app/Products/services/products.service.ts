@@ -20,4 +20,7 @@ export class ProductsService {
       console.log(`${env.apiUrl}/products/category/${Category}`);
     return this.http.get(`${env.apiUrl}/products/category/${Category}`);
     }
+    getProductDetails(id:number){
+      return this.http.get(`${env.apiUrl}/products/${id}`);
+      }
 }

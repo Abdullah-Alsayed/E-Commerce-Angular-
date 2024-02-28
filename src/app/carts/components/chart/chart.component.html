@@ -1,1 +1,40 @@
-<p>chart works!</p>
+<div class="main">
+  <div class="Shopping-Cart">
+    <div class="m-3">
+      <h1 class="text-primary">Shopping Cart</h1>
+      <h6 class="text-success">you Have 2 item in your cart</h6>
+    </div>
+    <hr />
+    <table class="table table table-striped">
+      <thead>
+        <tr class="text-center">
+          <th scope="col"></th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Total</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-center">
+          <th>1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td><div class="d-flex justify-content-center gap-2">
+            <button class="btn btn-dark">+</button>
+            <input   class="form-control w-25">
+            <button class="btn btn-dark">-</button>
+          </div></td>
+          <td>mdo</td>
+          <td><button class="btn btn-danger">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-end">
+      <div><b>Total:</b> <span> 123 LE</span></div>
+      <div><button class="btn btn-success">Order now</button></div>
+    </div>
+    <div [hidden]="true" class="alert alert-success mt-2" role="alert">Order Added successfully</div>
+  </div>
+</div>

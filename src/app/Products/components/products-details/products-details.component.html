@@ -1,1 +1,25 @@
-<p>products-details works!</p>
+<div class="row w-100 justify-content-center align-items-center"*ngIf="!loading">
+<div class="col-4">
+<img [src]="product.image" class="img-fluid w-100" [alt]="product.image">
+</div>
+<div class="col-4">
+  <ul class="date">
+    <li>
+      <span> <b>title</b> : {{product.title}}</span>
+    </li>
+    <li>
+      <span><b> category</b> : {{product.category}}</span>
+    </li>
+    <li>
+      <span><b> description</b> : {{product.description}}</span>
+    </li>
+    <li>
+      <span><b>price</b>: {{product.price}}</span>
+    </li>
+  </ul>
+</div>
+</div>
+<div class="d-flex justify-content-center mt-5" *ngIf="loading" >
+  <app-spinner></app-spinner>
+</div>
+
