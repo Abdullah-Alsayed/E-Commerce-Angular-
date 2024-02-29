@@ -1,8 +1,9 @@
 <div class="main">
   <div class="Shopping-Cart">
-    <div class="m-3">
+    <div class="m-1">
       <h1 class="text-primary">Shopping Cart</h1>
-      <h6 class="text-success">you Have 2 item in your cart</h6>
+  <h6 class="text-success">you Have {{cartList.length}} item in your cart</h6>
+      <div class="d-flex w-100 justify-content-end"><button (click)="clearChart()" class="btn btn-outline-danger">Clear Chart</button></div>
     </div>
     <hr />
     <table class="table table table-striped">
@@ -17,24 +18,28 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="text-center">
-          <th>1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td><div class="d-flex justify-content-center gap-2">
-            <button class="btn btn-dark">+</button>
-            <input   class="form-control w-25">
-            <button class="btn btn-dark">-</button>
-          </div></td>
-          <td>mdo</td>
-          <td><button class="btn btn-danger">Delete</button></td>
+        <tr class="text-center" *ngFor="let item of cartList ; let i = index">
+          <th><img src="{{ item.product.image }}" alt="{{ item.product.image }}" width="120"></th>
+          <td>{{ item.product.title }}</td>
+          <td>{{ item.product.price }}</td>
+          <td>
+            <div class="d-flex justify-content-center gap-2">
+              <button (click)="UpdateQuantity(2,i)" class="btn btn-dark">-</button>
+              <input value="{{ item.quantity }}" [(ngModel)]="item.quantity" class="form-control text-center w-25" />
+              <button (click)="UpdateQuantity(1,i)" class="btn btn-dark">+</button>
+            </div>
+          </td>
+          <td>{{ item.product.price * item.quantity }}</td>
+          <td><button (click)="deleteProduct(i)" class="btn btn-danger">Delete</button></td>
         </tr>
       </tbody>
     </table>
     <div class="table-end">
-      <div><b>Total:</b> <span> 123 LE</span></div>
-      <div><button class="btn btn-success">Order now</button></div>
+      <div><b>Total:</b> <span> {{total}} LE</span></div>
+      <div><button (click)="orderNow()" [disabled]="cartList.length == 0" [ngClass]="cartList.length == 0 ? 'btn btn-danger' : 'btn btn-success' ">Order now</button></div>
     </div>
-    <div [hidden]="true" class="alert alert-success mt-2" role="alert">Order Added successfully</div>
+    <div *ngIf="IsDone"class="alert alert-success mt-2" role="alert">
+      Order Added successfully
+    </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
+import { product } from './../../models/product';
 import { cart } from './../../../carts/models/cart';
 import { Component, Input, OnInit } from '@angular/core';
-import { product } from '../../models/product';
 
 @Component({
   selector: 'app-product-card',
@@ -17,15 +17,18 @@ export class ProductCardComponent {
     this.toggleAddBtn = false;
     this.Quantity = 1;
   }
-  addToCart() {
+  addToCart(productId: any) {
     if ('cart' in localStorage) {
       this.cart = JSON.parse(localStorage.getItem('cart')!);
-      this.cart.push({ product: this.product!, quantity: this.Quantity });
-      localStorage.setItem('cart', JSON.stringify(this.cart));
-    } else {
-      this.cart.push({ product: this.product!, quantity: this.Quantity });
-      localStorage.setItem('cart', JSON.stringify(this.cart));
-    }
+      const existingProductIndex = this.cart.findIndex(
+        (item) => item.product.id === productId
+      );
+      if (existingProductIndex !== -1)
+        this.cart[existingProductIndex].quantity += this.Quantity;
+      else this.cart.push({ product: this.product!, quantity: this.Quantity });
+    } else this.cart.push({ product: this.product!, quantity: this.Quantity });
+
+    localStorage.setItem('cart', JSON.stringify(this.cart));
     this.toggleAddBtn = false;
     alert('Added Successfully product');
   }
