@@ -1,24 +1,26 @@
 import { json } from 'express';
-import { cart } from './../../models/cart';
+import { cart } from '../../models/cart';
 import {
   Component,
   DoCheck,
   OnChanges,
   OnInit,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { OperationEnum } from '../../../core/model/OperationEnum';
+import { sharedService } from '../../../shared/services/services.service';
 
 @Component({
-  selector: 'app-chart',
-  templateUrl: './chart.component.html',
-  styleUrl: './chart.component.css',
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+  styleUrl: './cart.component.css',
 })
-export class ChartComponent implements OnInit, DoCheck {
+export class CartComponent implements OnInit, DoCheck {
   cartList: cart[];
   total: number;
   IsDone: boolean;
-  constructor() {
+  constructor(private sharedService:sharedService) {
     this.cartList = [];
     this.total = 0;
     this.IsDone = false;
@@ -44,6 +46,7 @@ export class ChartComponent implements OnInit, DoCheck {
         this.total += element.product.price * element.quantity;
       });
     }
+    this.total = Math.round(this.total);
   }
 
   UpdateQuantity(Operation: OperationEnum, index: number) {
@@ -61,18 +64,18 @@ export class ChartComponent implements OnInit, DoCheck {
   }
   deleteProduct(index: number) {
     this.cartList.splice(index, 1);
+   this.sharedService.fireToast("Successfully deleted product","success",1500);
   }
   orderNow() {
     this.IsDone = true;
     this.clearChart();
-    setTimeout(() => {
-      this.IsDone = false;
-    }, 3000);
+    this.sharedService.fireToast("Successfully", "success",1500);
   }
   clearChart() {
     console.log('clearChart');
     this.cartList = [];
     this.total = 0;
+    this.sharedService.fireToast("Successfully", "success",1500);
   }
   saveChanges() {
     localStorage.setItem('cart', JSON.stringify(this.cartList));

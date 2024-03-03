@@ -1,17 +1,19 @@
+import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartComponent } from './components/chart/chart.component';
+import { CartComponent } from './components/cart/cart.component';
 import { FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    ChartComponent
+    CartComponent,
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class CartsModule { }

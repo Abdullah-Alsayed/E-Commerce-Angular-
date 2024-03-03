@@ -4,17 +4,22 @@ import { ProductsDetailsComponent } from './components/products-details/products
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { AdminProductListComponent } from './Admin/components/admin-product-list/admin-product-list.component';
+import { ProductFormComponent } from './Admin/components/product-form/product-form.component';
 
 @NgModule({
   declarations: [
     ProductsDetailsComponent,
     ProductListComponent,
     ProductCardComponent,
+    AdminProductListComponent,
+    ProductFormComponent,
+
   ],
-  imports: [CommonModule,HttpClientModule,FormsModule,SharedModule,RouterModule],
-  exports: [ProductCardComponent, ProductListComponent],
+  imports: [CommonModule,HttpClientModule,FormsModule,SharedModule,RouterModule,ReactiveFormsModule],
+  exports: [ProductCardComponent, ProductListComponent,AdminProductListComponent,ReactiveFormsModule],
 })
 export class ProductsModule {}

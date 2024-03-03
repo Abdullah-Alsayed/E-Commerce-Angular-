@@ -19,7 +19,7 @@
       </thead>
       <tbody>
         <tr class="text-center" *ngFor="let item of cartList ; let i = index">
-          <th><img src="{{ item.product.image }}" alt="{{ item.product.image }}" width="120"></th>
+          <th><img src="{{ item.product.image }}" alt="{{ item.product.image }}" height="120" width="120"></th>
           <td>{{ item.product.title }}</td>
           <td>{{ item.product.price }}</td>
           <td>
@@ -30,16 +30,42 @@
             </div>
           </td>
           <td>{{ item.product.price * item.quantity }}</td>
-          <td><button (click)="deleteProduct(i)" class="btn btn-danger">Delete</button></td>
+          <td><button [swal] = "deleteSwal" (confirm)="deleteProduct(i)" class="btn btn-danger">Delete</button></td>
         </tr>
       </tbody>
     </table>
     <div class="table-end">
       <div><b>Total:</b> <span> {{total}} LE</span></div>
-      <div><button (click)="orderNow()" [disabled]="cartList.length == 0" [ngClass]="cartList.length == 0 ? 'btn btn-danger' : 'btn btn-success' ">Order now</button></div>
+      <div><button [swal]="ConfirmSwal" [disabled]="cartList.length == 0" [ngClass]="cartList.length == 0 ? 'btn btn-danger' : 'btn btn-success' ">Order now</button></div>
     </div>
-    <div *ngIf="IsDone"class="alert alert-success mt-2" role="alert">
+    <!-- <div *ngIf="IsDone"class="alert alert-success mt-2" role="alert">
       Order Added successfully
-    </div>
+    </div> -->
   </div>
 </div>
+
+<swal
+  #ConfirmSwal
+  title="Confirm Order"
+  text="are you sure you want to confirm this order?"
+  icon="question"
+  [showCancelButton]="true"
+  [focusConfirm]="true"
+  confirmButtonColor="#198754"
+  cancelButtonColor="#dc3545"
+  (confirm)="orderNow()"
+  >
+</swal>
+
+<swal
+  #deleteSwal
+  title="delete Product"
+  text="are you sure you want to Delete this product"
+  icon="warning"
+  [showCancelButton]="true"
+  [focusConfirm]="true"
+  confirmButtonColor="#198754"
+  cancelButtonColor="#dc3545"
+  >
+</swal>
+

@@ -12,5 +12,9 @@
     },
     "CodeGPT.Autocomplete.maxTokens": 730,
     "CodeGPT.Autocomplete.enabled": false,
-    "CodeGPT.apiKey": "OpenAI"
+    "CodeGPT.apiKey": "OpenAI",
+    "cSpell.words": [
+        "Swal",
+        "sweetalert"
+    ]
 }

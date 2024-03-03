@@ -7,6 +7,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ProductsService {
+  addProduct(request:any) {
+    return this.http.post(`${env.apiUrl}/products`,request);
+  }
 
 
   constructor(private http:HttpClient) { }

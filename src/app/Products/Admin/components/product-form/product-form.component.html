@@ -1,0 +1,41 @@
+<div class="row justify-content-center mt-5">
+  <h3>{{title}} Product</h3>
+  <form  [formGroup]="productForm" class="col-8">
+    <div class="mb-3">
+      <label for="Name" class="form-label">Name</label>
+      <input value="{{product?.title??''}}" formControlName="title" type="text" [ngClass]="{'input-Invalid': !productForm.controls['title'].valid && productForm.controls['title'].touched}"  class="form-control" id="Name" placeholder="Name">
+      <span class="errorSpan"  *ngIf="!productForm.controls['title'].valid && productForm.controls['title'].touched">This is Required !</span>
+    </div>
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input value="{{product?.price??''}}" type="number" [ngClass]="{'input-Invalid': !productForm.controls['price'].valid && productForm.controls['price'].touched}"  formControlName="price"  min="0" class="form-control" id="Price" placeholder="Price">
+      <span class="errorSpan"  *ngIf="!productForm.controls['price'].valid && productForm.controls['price'].touched">This is Required !</span>
+    </div>
+    <label for="category" class="form-label">category</label>
+    <app-input-select [ngClass]="{'input-Invalid': !productForm.controls['category'].valid && productForm.controls['category'].touched}" [title]="'categories'" [data]="categories" (selectedValue)="updateCategory($event)"></app-input-select>
+    <span class="errorSpan"  *ngIf="!productForm.controls['category'].valid && productForm.controls['category'].touched">This is Required !</span>
+    <div class="mb-3">
+      <label for="image" class="form-label">image</label>
+      <input price [ngClass]="{'input-Invalid': !productForm.controls['image'].valid && productForm.controls['image'].touched}"  formControlName="image" class="form-control" (change)="readURL($event);" type="file" id="image">
+      <span class="errorSpan"  *ngIf="!productForm.controls['image'].valid && productForm.controls['image'].touched">This is Required !</span>
+      <img [src]="imageSrc" class="mt-3" width="120"/>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">description</label>
+      <input value="{{product?.description??''}}" [ngClass]="{'input-Invalid': !productForm.controls['description'].valid && productForm.controls['description'].touched}"  formControlName="description"  class="form-control" type="text" id="description">
+      <span class="errorSpan"  *ngIf="!productForm.controls['description'].valid && productForm.controls['description'].touched">This is Required !</span>
+    </div>
+    <button [swal]="confirmSwal" (confirm)="onsubmit()" [className]="productForm.valid ? 'btn btn-success':' btn btn-danger'" [disabled]="!productForm.valid" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<swal
+  #confirmSwal
+  title="are you sure {{title}} Product"
+  icon="question"
+  [showCancelButton]="true"
+  [focusConfirm]="true"
+  confirmButtonColor="#198754"
+  cancelButtonColor="#dc3545"
+  >
+</swal>

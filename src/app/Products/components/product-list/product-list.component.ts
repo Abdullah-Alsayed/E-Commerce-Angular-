@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
 import { product } from '../../models/product';
 import { Router } from '@angular/router';
-import { ErrorComponent } from '../../../shared/components/error/error.component';
+import { sharedService } from '../../../shared/services/services.service';
 
 @Component({
   selector: 'app-product-list',
@@ -12,8 +12,12 @@ import { ErrorComponent } from '../../../shared/components/error/error.component
 export class ProductListComponent {
   products: product[];
   categories: string[];
-  loading :boolean
-  constructor(private services: ProductsService, private router: Router) {
+  loading: boolean;
+  constructor(
+    private services: ProductsService,
+    private router: Router,
+    private sharedService: sharedService
+  ) {
     this.products = [];
     this.categories = [];
     this.loading = true;
@@ -25,7 +29,7 @@ export class ProductListComponent {
         this.products = data;
         this.loading = false;
       },
-      (error) => this.router.navigateByUrl('/error')
+      (error) => this.sharedService.fireToast(error, 'error', 1000)
     );
   }
   getCategoriesList() {
@@ -34,7 +38,7 @@ export class ProductListComponent {
         console.log(data);
         this.categories = data;
       },
-      (error) => this.router.navigateByUrl('/error')
+      (error) => this.sharedService.fireToast(error, 'error', 1000)
     );
   }
   getProductListByCategory(category: any) {
@@ -43,13 +47,13 @@ export class ProductListComponent {
         this.products = data;
         this.loading = false;
       },
-      (error) => this.router.navigateByUrl('/error')
+      (error) => this.sharedService.fireToast(error, 'error', 1000)
     );
   }
   productFilterByCategory(category: any) {
     console.log(category);
     this.loading = true;
-    category == "All"
+    category == 'All'
       ? this.getProductList()
       : this.getProductListByCategory(category);
   }

@@ -1,6 +1,7 @@
 import { product } from './../../models/product';
 import { cart } from './../../../carts/models/cart';
 import { Component, Input, OnInit } from '@angular/core';
+import { sharedService } from '../../../shared/services/services.service';
 
 @Component({
   selector: 'app-product-card',
@@ -12,7 +13,7 @@ export class ProductCardComponent {
   cart: cart[];
   toggleAddBtn: boolean;
   Quantity: number;
-  constructor() {
+  constructor(private sharedService:sharedService) {
     this.cart = [];
     this.toggleAddBtn = false;
     this.Quantity = 1;
@@ -30,6 +31,6 @@ export class ProductCardComponent {
 
     localStorage.setItem('cart', JSON.stringify(this.cart));
     this.toggleAddBtn = false;
-    alert('Added Successfully product');
+    this.sharedService.fireToast("Successfully", "success",2500);
   }
 }
