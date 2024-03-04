@@ -32,7 +32,10 @@
           <td>{{ item.title }}</td>
           <td>{{ item.category }}</td>
           <td>{{ item.price }}</td>
-          <td><button [routerLink]="['/admin/productForm',item.id]" routerLinkActive="router-link-active"  class="btn btn-primary">Update</button></td>
+          <td>
+            <button [routerLink]="['/admin/productForm',item.id]" routerLinkActive="router-link-active"  class="btn btn-primary">Update</button>
+            <button [swal] = "deleteSwal" (confirm)="deleteProduct(item.id)" class="btn btn-danger m-1">Delete</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -41,3 +44,14 @@
 <div class="d-flex justify-content-center mt-5" *ngIf="loading">
   <app-spinner></app-spinner>
 </div>
+<swal
+  #deleteSwal
+  title="delete Product"
+  text="are you sure you want to Delete this product"
+  icon="warning"
+  [showCancelButton]="true"
+  [focusConfirm]="true"
+  confirmButtonColor="#198754"
+  cancelButtonColor="#dc3545"
+  >
+</swal>

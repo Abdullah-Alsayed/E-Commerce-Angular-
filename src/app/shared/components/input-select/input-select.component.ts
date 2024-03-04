@@ -8,10 +8,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class InputSelectComponent {
 @Input() title:string ;
 @Input() data:string[] ;
+@Input() Select:string ;
 @Output() selectedValue = new EventEmitter<string>();
 constructor(){
 this.data = []
 this.title = '';
+this.Select='';
 }
 updateChange(Selected:any){
 this.selectedValue.emit(Selected.value);

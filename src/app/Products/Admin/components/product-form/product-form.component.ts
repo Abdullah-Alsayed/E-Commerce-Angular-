@@ -1,5 +1,4 @@
 import { ProductsService } from './../../../services/products.service';
-import { product } from './../../../models/product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,8 +14,10 @@ export class ProductFormComponent implements OnInit {
   title: string;
   product?: any;
   categories: string[];
+  category: string;
   imageSrc: string | ArrayBuffer | null;
-
+  loading: boolean;
+  PageLoading: boolean;
   constructor(
     private builder: FormBuilder,
     private ProductsService: ProductsService,
@@ -25,6 +26,10 @@ export class ProductFormComponent implements OnInit {
   ) {
     this.categories = [];
     this.imageSrc = '';
+    this.category = '';
+    this.loading = false;
+    this.PageLoading = true;
+
     {
       this.title = '';
       this.productForm = builder.group({
@@ -45,9 +50,16 @@ export class ProductFormComponent implements OnInit {
     this.getCategoriesList();
     if (this.router.snapshot.paramMap.get('id') != undefined || null) {
       const id = this.router.snapshot.paramMap.get('id') ?? 0;
-      this.ProductsService.getProductDetails(+id).subscribe((data) => {
+      this.ProductsService.getProductDetails(+id).subscribe((data: any) => {
         this.product = data;
-         console.log(data)
+        this.imageSrc = data.image;
+        this.category = data.category;
+        this.productForm.patchValue({
+          title: data.title,
+          price: data.price,
+          description: data.description,
+          category: data.category,
+        });
       });
     }
   }
@@ -55,6 +67,7 @@ export class ProductFormComponent implements OnInit {
     this.ProductsService.getCategoriesList().subscribe(
       (data: any) => {
         this.categories = data;
+        this.PageLoading = false;
       },
       (error) => this.sharedService.fireToast(error, 'error', 1000)
     );
@@ -63,6 +76,7 @@ export class ProductFormComponent implements OnInit {
     this.productForm.controls['category'].setValue(category);
   }
   onsubmit() {
+    this.loading = true;
     this.router.snapshot.paramMap.get('id') != undefined || null
       ? this.updateProduct()
       : this.addProduct();
@@ -70,6 +84,7 @@ export class ProductFormComponent implements OnInit {
   addProduct() {
     this.ProductsService.addProduct(this.productForm.value).subscribe(
       (product) => {
+        this.loading = false;
         this.sharedService.fireToast(
           'Product Added successfully',
           'success',
@@ -82,13 +97,20 @@ export class ProductFormComponent implements OnInit {
   }
 
   updateProduct() {
-    this.ProductsService.addProduct(this.productForm.value).subscribe(
-      (product) => {
+    this.ProductsService.updateProduct(
+      this.productForm.value,
+      this.product.id
+    ).subscribe(
+      (product: any) => {
+        this.loading = false;
         this.sharedService.fireToast(
           'Product Updated successfully',
           'success',
           1500
         );
+      },
+      (error: any) => {
+        this.sharedService.fireToast(error.message, 'error', 1500);
       }
     );
   }

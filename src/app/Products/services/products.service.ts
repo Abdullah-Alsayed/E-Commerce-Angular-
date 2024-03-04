@@ -7,6 +7,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ProductsService {
+    updateProduct(request: any , id:number) {
+    console.log('update Request',request)
+    return this.http.patch(`${env.apiUrl}/products/${id}`,request);
+  }
   addProduct(request:any) {
     return this.http.post(`${env.apiUrl}/products`,request);
   }
@@ -16,6 +20,9 @@ export class ProductsService {
   getProductList(){
   return this.http.get(`${env.apiUrl}/products`);
   }
+  deleteProduct(id:number){
+    return this.http.delete(`${env.apiUrl}/products/${id}`);
+    }
   getCategoriesList(){
     return this.http.get(`${env.apiUrl}/products/categories`);
     }

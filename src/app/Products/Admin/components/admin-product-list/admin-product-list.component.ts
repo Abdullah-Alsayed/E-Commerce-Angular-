@@ -2,6 +2,8 @@ import { Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 import { product } from '../../../models/product';
 import { Component } from '@angular/core';
+import { error } from 'console';
+import { sharedService } from '../../../../shared/services/services.service';
 
 @Component({
   selector: 'app-admin-product-list',
@@ -12,7 +14,11 @@ export class AdminProductListComponent {
   productList: product[];
   loading: boolean;
   categories: string[];
-  constructor(private service: ProductsService, private router: Router) {
+  constructor(
+    private service: ProductsService,
+    private router: Router,
+    private sharedService: sharedService
+  ) {
     this.productList = [];
     this.categories = [];
     this.loading = true;
@@ -49,9 +55,21 @@ export class AdminProductListComponent {
   }
 
   productFilterByCategory(category: any) {
-   this.loading = true;
-    category == "All"
+    this.loading = true;
+    category == 'All'
       ? this.getProducts()
       : this.getProductListByCategory(category);
+  }
+
+  deleteProduct(id: number) {
+    this.service.deleteProduct(id).subscribe(
+      (data: any) => {
+        this.productList = this.productList.filter((item) => item.id !== id);
+        this.sharedService.fireToast('successfully', 'success', 1500);
+      },
+      (error: any) => {
+        this.sharedService.fireToast(error.message, 'error', 1500);
+      }
+    );
   }
 }
